@@ -1,0 +1,9 @@
+Description:
+    Generates a web tracking component
+
+    No arguments are needed.
+
+
+Example:
+    ./script/generate rail_stat
+

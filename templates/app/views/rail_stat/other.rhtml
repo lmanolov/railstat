@@ -1,0 +1,51 @@
+<h1>Other statistics on <%%= @subdomain %> </h1>
+<%%=render_partial 'menu'%>
+<h2>Flash supported</h2>
+<div id="path_stats_flash">
+  <table class="list">
+    <tr><th width='50%'>Version</th><th>Percentage</th></tr>
+    <%% initListClass
+       for data in @flashes %>
+    <tr class="<%%=popListClass%>"><td><%%=path_version_data(data['flash'])%></td><td><%%=data['percent']%> %</td></tr>
+    <%% end %>
+  </table>
+</div>
+
+<h2>JavaVM Enabled</h2>
+<table class="list">
+  <tr><th width='50%'>Version</th><th>Percentage</th></tr>
+  <%% initListClass
+     for data in @jes %>
+  <tr class="<%%=popListClass%>"><td><%%=path_version_data(data['java_enabled'])%></td><td><%%=data['percent']%> %</td></tr>
+  <%% end %>
+</table>
+
+<h2>Javascript suported</h2>
+<table class="list">
+  <tr><th width='50%'>JavaScript</th><th>Percentage</th></tr>
+  <%% initListClass
+     for data in @javas %>
+  <tr class="<%%=popListClass%>"><td><%%=path_version_data(data['java'])%></td><td><%%=data['percent']%> %</td></tr>
+  <%% end %>
+</table>
+
+<h2>Screen width</h2>
+<table class="list">
+  <tr><th width='50%'>Width</th><th>Percentage</th></tr>
+  <%% initListClass
+     for data in @widths %>
+  <tr class="<%%=popListClass%>"><td><%%=path_version_data(data['screen_size'])%></td><td><%%=data['percent']%> %</td></tr>
+  <%% end %>
+</table>
+
+<h2>Color depth</h2>
+<table class="list">
+  <tr><th width='50%'>Color depth</th><th>Percentage</th></tr>
+  <%% initListClass
+     for data in @colors %>
+  <tr class="<%%=popListClass%>"><td><%%=path_version_data(data['colors'])%></td><td><%%=data['percent']%> %</td></tr>
+  <%% end %>
+</table>
+
+</div>
+</div>

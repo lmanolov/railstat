@@ -1,0 +1,25 @@
+<h1>Language and countries statistics for <%%= @subdomain %> </h1>
+<%%=render_partial 'menu'%>
+<h2>Languages</h2>
+<div id="path_stats_lang">
+  <table class="list">
+    <tr><th>Language</th><th>%</th></tr>
+    <%% initListClass
+       for row in @languages %>
+    <tr class="<%%=popListClass%>"><td><%%=get_lang(row['language'])%></td><td><%%=row['percent']%>%</td></tr>
+    <%% end %>
+  </table>
+</div>
+
+<h2>Countries</h2>
+<div id="path_stats_country">
+  <table class="list">
+    <tr><th>Country</th><th>%</th></tr>
+    <%% initListClass
+       for row in @countries %>
+    <tr class="<%%=popListClass%>"><td><%%=row['country']%></td><td><%%=row['percent']%>%</td></tr>
+    <%% end %>
+  </table>
+</div>
+</div>
+</div>

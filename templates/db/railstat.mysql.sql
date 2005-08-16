@@ -1,0 +1,32 @@
+CREATE TABLE rail_stats (
+  id int(11) unsigned NOT NULL auto_increment,
+  remote_ip varchar(15) default '',
+  country varchar(50) default '',
+  language VARCHAR(5) default '',
+  domain varchar(250) default '',
+  subdomain varchar(250) default '',
+  referer varchar(255) default '',
+  resource varchar(255) default '',
+  user_agent varchar(255) default '',
+  platform varchar(50) default '',
+  browser varchar(50) default '',
+  version varchar(15) default '',
+  dt int(10) unsigned default '0',
+  screen_size varchar(10) default null,
+  colors varchar(10) default null,
+  java varchar(10) default null,
+  java_enabled varchar(10) default null,
+  flash varchar(10) default null,
+  UNIQUE KEY id (id),
+  INDEX(subdomain)
+) TYPE=MyISAM;
+
+CREATE TABLE search_terms (
+  id int(11) unsigned NOT NULL auto_increment,
+  subdomain varchar(250) default '',
+  searchterms varchar(255) NOT NULL default '',
+  count int(10) unsigned NOT NULL default '0',
+  domain varchar(250),
+  PRIMARY KEY  (id),
+  INDEX(subdomain)
+) TYPE=MyISAM;

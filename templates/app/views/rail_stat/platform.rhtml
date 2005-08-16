@@ -1,0 +1,25 @@
+<h1>Platform statistics for <%%= @subdomain %> </h1>
+<%%=render_partial 'menu'%>
+<h2>Operating systems</h2>
+<div id="path_stats_pl">
+  <table class="list">
+    <tr><th>OS</th><th>%</th></tr>
+    <%% initListClass
+   for pl in @platforms %>
+    <tr class="<%%=popListClass%>"><td><%%=pl['platform']%></td><td><%%=pl['percent']%>%</td></tr>
+    <%% end %>
+  </table>
+</div>
+
+<h2>Browsers usage</h2>
+<div id="path_stats_br">
+  <table class="list">
+    <tr><th>Browser</th><th>Version</th><th>%</th></tr>
+    <%% initListClass
+       for br in @browsers %>
+    <tr class="<%%=popListClass%>"><td><%%=br['browser']%></td><td><%%=br['version']%></td><td><%%=br['percent']%>%</td></tr>
+    <%% end %>
+  </table>
+</div>
+</div>
+</div>
