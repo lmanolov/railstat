@@ -3,8 +3,8 @@ class RailStat < ActiveRecord::Base
   # Method returns paths hash with to 40 paths whith value = top index (1..40)
   def RailStat.get_ordered40resources(subdomain)
     ordered_resources = []
-    connection.select_all("SELECT resource, COUNT(resource) AS requests,  max(dt) as dt " <<
-                            "FROM rail_stats WHERE subdomain = '#{subdomain}' " <<
+    find_by_sql("SELECT resource, COUNT(resource) AS requests,  max(dt) as dt " +
+                            "FROM rail_stats WHERE subdomain = '#{subdomain}' " +
                             "GROUP BY resource ORDER BY dt DESC LIMIT 0,40").each { |row|
       ordered_resources << row
     }
@@ -35,18 +35,14 @@ class RailStat < ActiveRecord::Base
   end
   
   def RailStat.get_last_week_stats(subdomain)
-    week_hits = []
-    connection.select_all("select date_format(from_unixtime(dt), '%Y-%m-%d' ) as hdate, count(*) as hits " <<
-                            "from rail_stats " <<
-                            "where to_days(now()) - to_days(from_unixtime(dt)) <= 7 and subdomain = '#{subdomain}' "<<
-                            "group by hdate order by 1 desc;").each { |row|
-      week_hits << row
-    }
-    week_hits
+    find_by_sql("select date_format(from_unixtime(dt), '%Y-%m-%d' ) as hdate, count(*) as hits " +
+                            "from rail_stats " +
+                            "where to_days(now()) - to_days(from_unixtime(dt)) <= 7 and subdomain = '#{subdomain}' " +
+                            "group by hdate order by 1 desc;")
   end
   
   def RailStat.find_first_hit(subdomain)
-    find_first(["subdomain = ?", subdomain], "dt asc")
+    find(:first, :conditions => ["subdomain = ?", subdomain], :order => "dt ASC")
   end
   
   def datetime
@@ -85,62 +81,50 @@ class RailStat < ActiveRecord::Base
   end
   
   def RailStat.platform_stats(subdomain, hits)
-    platforms = []
-    connection.select_all("SELECT platform, COUNT(platform) AS 'total', (COUNT(platform)/#{hits})*100 as percent " <<
-                            "FROM rail_stats " <<
-                            "WHERE subdomain = '#{subdomain}' " <<
-                            "GROUP BY platform " <<
-                            "ORDER BY total DESC; ").each { |row| platforms << row }
-    platforms
+    find_by_sql("SELECT platform, COUNT(platform) AS 'total', (COUNT(platform)/#{hits})*100 as percent " +
+                            "FROM rail_stats " +
+                            "WHERE subdomain = '#{subdomain}' " +
+                            "GROUP BY platform " +
+                            "ORDER BY total DESC; ")
   end
   
   def RailStat.browser_stats(subdomain, hits)
-    browsers = []
-    connection.select_all("SELECT browser, version, COUNT(*) AS 'total', (COUNT(*)/#{hits})*100 as percent " <<
-                            "FROM rail_stats " <<
-                            "WHERE browser != 'unknown' and subdomain = '#{subdomain}'" <<
-                            "GROUP BY browser, version " <<
-                            "ORDER BY total DESC; ").each { |row| browsers << row }
-    browsers
+    find_by_sql("SELECT browser, version, COUNT(*) AS 'total', (COUNT(*)/#{hits})*100 as percent " +
+                            "FROM rail_stats " +
+                            "WHERE browser != 'unknown' and subdomain = '#{subdomain}'" +
+                            "GROUP BY browser, version " +
+                            "ORDER BY total DESC; ")
   end
   
   def RailStat.language_stats(subdomain, hits)
-    languages = []
-    connection.select_all("SELECT language, COUNT(*) AS 'total', (COUNT(*)/#{hits})*100 as percent " <<
-                            "FROM rail_stats " <<
-                            "WHERE language != '' and language is not null and language != 'empty' and subdomain = '#{subdomain}'" <<
-                            "GROUP BY language " <<
-                            "ORDER BY total DESC; ").each { |row| languages << row }
-    languages
+    find_by_sql("SELECT language, COUNT(*) AS 'total', (COUNT(*)/#{hits})*100 as percent " +
+                            "FROM rail_stats " +
+                            "WHERE language != '' and language is not null and language != 'empty' and subdomain = '#{subdomain}'" +
+                            "GROUP BY language " +
+                            "ORDER BY total DESC; ")
   end
   
   def RailStat.country_stats(subdomain, hits)
-    countries = []
-    connection.select_all("SELECT country, COUNT(*) AS 'total', (COUNT(*)/#{hits})*100 as percent " <<
-                            "FROM rail_stats " <<
-                            "WHERE country != '' and country is not null and subdomain = '#{subdomain}'" <<
-                            "GROUP BY country " <<
-                            "ORDER BY total DESC; ").each { |row| countries << row }
-    countries
+    find_by_sql("SELECT country, COUNT(*) AS 'total', (COUNT(*)/#{hits})*100 as percent " +
+                            "FROM rail_stats " +
+                            "WHERE country != '' and country is not null and subdomain = '#{subdomain}'" +
+                            "GROUP BY country " +
+                            "ORDER BY total DESC; ")
   end
   
   def RailStat.domain_stats(subdomain)
-    domains = []
-    connection.select_all("SELECT domain, referer, resource, COUNT(domain) AS 'total' " <<
-                            "FROM rail_stats " <<
-                            "WHERE domain != '' and subdomain = '#{subdomain}'" <<
-                            "GROUP BY domain " <<
-                            "ORDER BY total DESC, dt DESC; ").each { |row| domains << row }
-    domains
+    find_by_sql("SELECT domain, referer, resource, COUNT(domain) AS 'total' " +
+                            "FROM rail_stats " +
+                            "WHERE domain != '' and subdomain = '#{subdomain}'" +
+                            "GROUP BY domain " +
+                            "ORDER BY total DESC, dt DESC; ")
   end
 
   def RailStat.stats_dyn(column, subdomain, hits)
-    datas = []
-    connection.select_all("SELECT #{column}, COUNT(*) AS 'total', (COUNT(*)/#{hits})*100 as percent " <<
-                            "FROM rail_stats " <<
-                            "WHERE subdomain = '#{subdomain}'" <<
-                            "GROUP BY #{column} " <<
-                            "ORDER BY total DESC; ").each { |row| datas << row }
-    datas
+    find_by_sql("SELECT #{column}, COUNT(*) AS 'total', (COUNT(*)/#{hits})*100 as percent " +
+                            "FROM rail_stats " +
+                            "WHERE subdomain = '#{subdomain}'" +
+                            "GROUP BY #{column} " +
+                            "ORDER BY total DESC; ")
   end
 end
