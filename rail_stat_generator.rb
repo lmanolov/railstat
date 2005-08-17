@@ -33,6 +33,7 @@ class RailStatGenerator < Rails::Generator::Base
 
       m.template "db/ip-to-country.mysql.sql", "db/ip-to-country.mysql.sql"
       m.template "db/railstat.mysql.sql", "db/railstat.mysql.sql"
+      m.template "db/railstat.pgsql.sql", "db/railstat.pgsql.sql"
 
       m.template "README", "README_RAILSTAT"
     end
