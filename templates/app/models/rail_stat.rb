@@ -5,7 +5,7 @@ class RailStat < ActiveRecord::Base
     ordered_resources = []
     find_by_sql("SELECT resource, COUNT(resource) AS requests,  max(dt) as dt " +
                             "FROM rail_stats WHERE subdomain = '#{subdomain}' " +
-                            "GROUP BY resource ORDER BY dt DESC LIMIT 0,40").each { |row|
+                            "GROUP BY resource ORDER BY dt DESC LIMIT 40").each { |row|
       ordered_resources << row
     }
     i = 1
