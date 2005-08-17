@@ -1,9 +1,21 @@
-Description:
-    Generates a web tracking component
+NAME
+     RailStat - creates a real-time web site statistics system
 
-    No arguments are needed.
+DESCRIPTION
+     This generator creates a real-time web site statistics system.
 
+     Features:
+      - Page views paths on each session
+      - Number of total hits / unique hits
+      - Operating system and browser
+      - Countries and languages
+      - Referrers and search strings
+      - Flash / JavaVM / Javascript / ScreenWidth / ColorDepth 
+            
+EXAMPLE
+      ./script/generate rail_stat
 
-Example:
-    ./script/generate rail_stat
+     This will generate controller, models, helper, views, db scripts, 
+     images and stylesheets needed for the web statistics system.
 
+     Installation instructions are provided in README_RAILSTAT

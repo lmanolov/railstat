@@ -27,6 +27,8 @@ module PathTracker
       
       sniff_keywords(domain, subdomain, referer);
 
+      @client_country = Iptoc.find_by_ip_address(@request.env['REMOTE_ADDR'])
+
       RailStat.create("remote_ip" => env['REMOTE_ADDR'],
                       "country" => ((@client_country.nil? or @client_country.country_name.nil?) ? '' : @client_country.country_name),
                       "language" => determine_lang(env['HTTP_ACCEPT_LANGUAGE']),

@@ -30,3 +30,14 @@ CREATE TABLE search_terms (
   PRIMARY KEY  (id),
   INDEX(subdomain)
 ) TYPE=MyISAM;
+
+CREATE TABLE iptocs (
+ id int(11) unsigned NOT NULL auto_increment,  
+ ip_from int(10) unsigned zerofill not null,
+ ip_to int(10) unsigned zerofill not null,
+ country_code2 char(2) not null,
+ country_code3 char(3) not null,
+ country_name varchar(50) not null,
+ PRIMARY KEY  (id),
+ unique index(ip_from, ip_to)
+);

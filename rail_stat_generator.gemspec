@@ -10,7 +10,7 @@ spec = Gem::Specification.new do |s|
   s.homepage = "http://www.railstat.com"
   s.platform = Gem::Platform::RUBY
   s.summary = "RailStat is a real-time web site statistics package which uses Ruby on Rails web application framework."
-  s.files = FileList['templates/**/*', 'rail_stat_generator.rb', 'USAGE'].to_a
+  s.files = FileList['templates/**/*', 'rail_stat_generator.rb', 'USAGE', 'MIT-LICENSE'].to_a
   s.rubyforge_project = 'railstat'
   s.autorequire = 'rail_stat_generator'
 end
