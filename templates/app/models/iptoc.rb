@@ -1,5 +1,7 @@
+require 'ipaddr'
 class Iptoc < ActiveRecord::Base
   def self.find_by_ip_address(ip_address)
-    find (:first, :conditions => ["IP_FROM <= inet_aton(?) AND IP_TO >= inet_aton(?)", ip_address, ip_address])
+    ip = IPAddr.new(ip_address)
+    find(:first, :conditions => ["IP_FROM <= ? AND IP_TO >= ?", ip.to_i, ip.to_i])
   end
 end
