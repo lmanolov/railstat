@@ -3,10 +3,18 @@
 <h2>Operating systems</h2>
 <div id="path_stats_pl">
   <table class="list">
-    <tr><th>OS</th><th>%</th></tr>
+    <tr>
+      <th>OS</th>
+      <th>Percentage</th>
+      <th>Hit Count</th>
+    </tr>
     <%% initListClass
-   for pl in @platforms %>
-    <tr class="<%%=popListClass%>"><td><%%=pl['platform']%></td><td><%%=pl['percent']%>%</td></tr>
+   for platform in @platforms %>
+    <tr class='<%%=popListClass%>'>
+      <td><%%= platform.platform %></td>
+      <td><%%= platform.percent %>%</td>
+      <td><%%= platform.total %></td>
+    </tr>
     <%% end %>
   </table>
 </div>
@@ -14,10 +22,20 @@
 <h2>Browsers usage</h2>
 <div id="path_stats_br">
   <table class="list">
-    <tr><th>Browser</th><th>Version</th><th>%</th></tr>
-    <%% initListClass
-       for br in @browsers %>
-    <tr class="<%%=popListClass%>"><td><%%=br['browser']%></td><td><%%=br['version']%></td><td><%%=br['percent']%>%</td></tr>
+    <tr>
+      <th>Browser</th>
+      <th>Version</th>
+      <th>Percentage</th>
+      <th>Hit Count</th>
+    </tr>
+<%% initListClass
+   for browser in @browsers %>
+    <tr class='<%%= popListClass %>'>
+      <td><%%= browser.browser %></td>
+      <td><%%= browser.version %></td>
+      <td><%%= browser.percent %>%</td>
+      <td><%%= browser.total %></td>
+    </tr>
     <%% end %>
   </table>
 </div>

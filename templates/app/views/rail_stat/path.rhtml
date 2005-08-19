@@ -16,7 +16,7 @@
   <%% if @paths.size > 0 %>
   <table class="list" width='100%'>
     <tr>
-      <th>D/T</th>
+      <th>Timestamp</th>
       <th>Path</th>
       <th>Addr.</th>
       <th>Browser</th>
@@ -29,16 +29,16 @@
                row.mark 
                domain, refferer = "-", '' %>
     <tr class='<%%=popListClass%>'> 
-      <td width='60px'><div class='cutField'><%%=get_time(row.dt)%></div></td>
+      <td width='60px'><div class='cutField'><%%=get_time(row.created_at)%></div></td>
       <td width='200px'><div class='cutField'>
-          <%%       last_access_time = row.dt 
+          <%%       last_access_time = row.created_at
                                # work through loop backwards so we get the *first* page time wise
                                (@paths.size-1).downto(i+1) { |j|
-                if not(@paths[j].marked?) and row.remote_ip == @paths[j].remote_ip and (last_access_time - 900 <= @paths[j].dt)
+                if not(@paths[j].marked?) and row.remote_ip == @paths[j].remote_ip and (last_access_time - 900 <= @paths[j].created_at)
                   domain, refferer = @paths[j].domain, @paths[j].referer if domain == "-" and @paths[j].domain and not(@paths[j].domain == SITE_NAME)%>
                    <%%=get_path_image(@paths[j].resource, @ordered_resources)%>
                    <%%           @paths[j].mark
-                  last_access_time = @paths[j].dt 
+                  last_access_time = @paths[j].created_at
                 end
               }
                                # add last page %>

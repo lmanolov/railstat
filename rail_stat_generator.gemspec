@@ -4,7 +4,7 @@ require 'rake'
 
 spec = Gem::Specification.new do |s|
   s.name = 'rail_stat_generator'
-  s.version = "0.1.1"
+  s.version = "0.1.2"
   s.authors = ["Luben Manolov", "Nick Penkov"]
   s.email = "lubo_AT_manolov.org"
   s.homepage = "http://www.railstat.com"

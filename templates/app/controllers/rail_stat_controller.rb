@@ -10,7 +10,8 @@ class RailStatController < ApplicationController
 
     @number_hits = (@params['nh'] or not @params['nh'].nil?) ? @params['nh'].to_i : 50
     @include_search_engines = ((@params['ise'] == '' or @params['ise'] == "1") ? 1 : 0)
-    
+
+    @count_totals = RailStat.resource_count_totals    
     @paths = RailStat.find_all_by_flag(@include_search_engines == 0, @number_hits, @subdomain)
   end
   
@@ -27,9 +28,6 @@ class RailStatController < ApplicationController
     d = Date.new(n.year, n.month, n.day)
     @today_total = RailStat.total_day_count(@subdomain, d)
     @today_unique = RailStat.unique_day_count(@subdomain, d)
-    if @first_hit.nil?
-      render_text "No hits"
-    end
   end
   
   def platform

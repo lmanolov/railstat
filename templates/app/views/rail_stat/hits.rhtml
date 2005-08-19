@@ -3,12 +3,17 @@
 <h2>Last week hits</h2>
 <div id="path_stats_lw">
   <table class="list">
-    <tr><th>Date</th><th>Hits</th></tr>
+    <tr>
+      <th>Date</th>
+      <th>Total Hits</th>
+      <th>Unique Hits</th>
+    </tr>
     <%% initListClass
        for day in @lastweek %>
     <tr class="<%%=popListClass%>">
       <td><%%=day['hdate']%></td>
-      <td><%%=day['hits']%></td>
+      <td><%%=day['total_hits']%></td>
+      <td><%%=day['unique_hits']%></td>
     </tr>
     <%% end %>
   </table>
