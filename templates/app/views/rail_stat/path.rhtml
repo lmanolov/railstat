@@ -22,13 +22,12 @@
       <th>Browser</th>
       <th>Platform</th>
     </tr>
-    <%%  initListClass
-           for i in 0..@paths.size-1
-             row = @paths[i]
-             if not(row.marked?)
-               row.mark 
-               domain, refferer = "-", '' %>
-    <tr class='<%%=popListClass%>'> 
+    <%% for i in 0..@paths.size-1
+         row = @paths[i]
+         if not(row.marked?)
+           row.mark 
+           domain, refferer = "-", '' -%>
+    <tr class='<%%= alternator %>'> 
       <td width='60px'><div class='cutField'><%%=get_time(row.created_at)%></div></td>
       <td width='200px'><div class='cutField'>
           <%%       last_access_time = row.created_at
@@ -67,9 +66,8 @@
   <%% if @orarr.size > 0 %>
           <table class="list">
             <tr><th colspan="2">Resource</th><th>Hits statistics</th></tr>
-            <%%   initListClass
-          for resource in @orarr %>
-            <tr class="<%%=popListClass%>">
+         <%% for resource in @orarr -%>
+            <tr class="<%%= alternator %>">
     <td><%%=get_path_image(resource['resource'], @ordered_resources)%></td>
     <td><a href='<%%=resource['resource']%>'><%%=h resource['resource'] %></a></td>
     <td><%%=resource['requests']%></td></tr>

@@ -3,10 +3,17 @@
 <h2>Repeat referrers</h2>
 <div id="path_stats_refsd">
   <table class="list">
-    <tr><th>Domains</th><th>Hits</th></tr>
-    <%% initListClass
-       for row in @refs %>
-    <tr class="<%%=popListClass%>"><td><a href='<%%=row['referer']%>' title='<%%=row['resource']%>'><%%=row['domain']%></a></td><td><%%=row['total']%></td></tr>
+    <tr>
+      <th>Domains</th>
+      <th>Referred to Resource</th>
+      <th>Hits</th>
+    </tr>
+    <%% for row in @refs %>
+    <tr class="<%%= alternator %>">
+      <td><a href='<%%= row['referer'] %>' title='<%%= row['resource'] %>'><%%=row['domain']%></a></td>
+      <td><%%= row['resource'] %></td>
+      <td><%%= row['total'] %></td>
+    </tr>
     <%% end %>
   </table>
 </div>
@@ -14,11 +21,16 @@
 <h2>Search strings</h2>
 <div id="path_stats_refst">
   <table class="list">
-    <tr><th>Search strings</th><th>Hits</th></tr>
-    <%% initListClass
-       for row in @searchterms %>
-    <tr class="<%%=popListClass%>"><td><%%=h row['searchterms']%></td><td><%%=row['count']%></td></tr>
-    <%% end %>
+    <tr>
+      <th>Search strings</th>
+      <th>Hits</th>
+    </tr>
+<%% for row in @searchterms %>
+    <tr class="<%%= alternator %>">
+      <td><%%=h row['searchterms'] %></td>
+      <td><%%= row['count'] %></td>
+    </tr>
+<%% end %>
   </table>
 </div>
 </div>

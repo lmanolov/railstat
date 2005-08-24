@@ -5,6 +5,10 @@ class RailStatController < ApplicationController
 
   before_filter :extract_subdomain
 
+  def index
+    redirect_to(:action=>'path')
+  end
+
   def path
     @ordered_resources, @orarr = RailStat.get_ordered40resources(@subdomain)
 
@@ -13,47 +17,60 @@ class RailStatController < ApplicationController
 
     @count_totals = RailStat.resource_count_totals    
     @paths = RailStat.find_all_by_flag(@include_search_engines == 0, @number_hits, @subdomain)
-  end
-  
-  def index
-    redirect_to(:action=>'path')
+    
+    # Experiments:
+    @total_hits = RailStat.count_hits(:subdomain => @subdomain)
+    @unique_hits = RailStat.count_hits(:unique, :subdomain => @subdomain)
   end
   
   def hits
-    @lastweek = RailStat.get_last_week_stats(@subdomain)
-    @first_hit = RailStat.find_first_hit(@subdomain)
-    @total_hits = RailStat.total_count(@subdomain)
-    @unique_hits = RailStat.unique_count(@subdomain)
+    @lastweek = RailStat.find_by_days(:subdomain=>@subdomain, :days => 7)
+    @first_hit = RailStat.find_first_hit(:subdomain=>@subdomain)
+    @total_hits = RailStat.count_hits(:subdomain => @subdomain)
+    @unique_hits = RailStat.count_hits(:unique, :subdomain => @subdomain)
     n = Time.now
     d = Date.new(n.year, n.month, n.day)
-    @today_total = RailStat.total_day_count(@subdomain, d)
-    @today_unique = RailStat.unique_day_count(@subdomain, d)
+    @today_total = RailStat.count_hits(:subdomain => @subdomain, :date => d)
+    @today_unique = RailStat.count_hits(:unique, :subdomain => @subdomain, :date => d)
+    @past_7_total = RailStat.count_hits(:subdomain => @subdomain, :past_days => 7)
+    @past_7_unique = RailStat.count_hits(:unique, :subdomain => @subdomain,  :past_days => 7)
   end
   
   def platform
-    hits = RailStat.total_count(@subdomain)
-    @platforms = RailStat.platform_stats(@subdomain, hits)
-    @browsers = RailStat.browser_stats(@subdomain, hits)
+    @total_hits = RailStat.count_hits(:subdomain => @subdomain)
+    @platforms = RailStat.find_by_platform(:subdomain => @subdomain)
+    @browsers = RailStat.find_by_browser(:subdomain => @subdomain)
   end
   
   def lang
-    hits = RailStat.total_count(@subdomain)
-    @languages = RailStat.language_stats(@subdomain, hits)
-    @countries = RailStat.country_stats(@subdomain, hits)
+    @total_hits = RailStat.count_hits(:subdomain => @subdomain)
+    @languages = RailStat.find_by_language(:subdomain => @subdomain)
+    @countries = RailStat.find_by_country(:subdomain => @subdomain)    
   end
   
   def refs
-    @refs = RailStat.domain_stats(@subdomain)
-    @searchterms = SearchTerm.find_grouped(@subdomain)
+    @refs = RailStat.find_by_domain(:subdomain => @subdomain)
+    @searchterms = SearchTerm.find_grouped(:subdomain => @subdomain)
   end
   
   def other
-    hits = RailStat.total_count(@subdomain)
-    @flashes = RailStat.stats_dyn("flash", @subdomain, hits)
-    @jes = RailStat.stats_dyn("java_enabled", @subdomain, hits)
-    @javas = RailStat.stats_dyn("java", @subdomain, hits)
-    @widths = RailStat.stats_dyn("screen_size", @subdomain, hits)
-    @colors = RailStat.stats_dyn("colors", @subdomain, hits)
+    #hits = RailStat.count_hits(:subdomain => @subdomain)
+    #@total_hits = RailStat.count_hits()
+    
+    @flash_clients = RailStat.find_by_client(:type => "flash", :subdomain => @subdomain)
+    @flash_clients_total = @flash_clients.inject(0) {|sum, result| sum + result.total.to_i} 				
+
+    @java_clients = RailStat.find_by_client(:type => "java_enabled", :subdomain => @subdomain)
+    @java_clients_total = @java_clients.inject(0) {|sum, result| sum + result.total.to_i}
+    
+    @javascript_clients = RailStat.find_by_client(:type => "java", :subdomain => @subdomain)
+    @javascript_clients_total = @javascript_clients.inject(0) {|sum, result| sum + result.total.to_i}
+    
+    @width_of_clients = RailStat.find_by_client(:type => "screen_size", :subdomain => @subdomain)
+    @width_of_clients_total = @width_of_clients.inject(0) {|sum, result| sum + result.total.to_i}
+    
+    @colors_of_clients = RailStat.find_by_client(:type => "colors", :subdomain => @subdomain)
+    @colors_of_clients_total = @colors_of_clients.inject(0) {|sum, result| sum + result.total.to_i}
   end
 
   def tracker_js

@@ -8,11 +8,10 @@
       <th>Percentage</th>
       <th>Hit Count</th>
     </tr>
-<%% initListClass
-   for language in @languages %>
-    <tr class='<%%= popListClass %>'>
+<%% for language in @languages %>
+    <tr class='<%%= alternator %>'>
       <td><%%= get_lang(language.language) %></td>
-      <td><%%= language.percent %>%</td>
+      <td><%%= sprintf("%000.2f", (language.total.to_f/@total_hits)*100) %>%</td>
       <td><%%= language.total %></td>
     </tr>
 <%% end %>
@@ -27,11 +26,10 @@
       <th>Percentage</th>
       <th>Hit Count</th>
     </tr>
-<%% initListClass
-   for country in @countries %>
-    <tr class="<%%= popListClass %>">
+<%% for country in @countries %>
+    <tr class="<%%= alternator %>">
       <td><%%= country.country %></td>
-      <td><%%= country.percent %>%</td>
+      <td><%%= sprintf("%000.2f", (language.total.to_f/@total_hits)*100) %>%</td>
       <td><%%= country.total %></td>
     </tr>
 <%% end %>

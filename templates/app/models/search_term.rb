@@ -11,9 +11,11 @@ class SearchTerm < ActiveRecord::Base
     end      
   end
 
-  def self.find_grouped(subdomain)
-    sts = []
-    connection.select_all("select searchterms, sum(count) as count from search_terms where subdomain = '#{subdomain}' group by domain order by 2 desc;").each { |row| sts << row }
-    sts
+  def self.find_grouped(params = {})
+    if params[:subdomain].nil?
+      SearchTerm.find_by_sql("SELECT searchterms, COUNT(*) AS total FROM search_terms GROUP BY domain, searchterms, count ORDER BY count DESC;")
+    else
+      SearchTerm.find_by_sql("SELECT searchterms, COUNT(*) AS total FROM search_terms WHERE subdomain = '#{params[:subdomain]}' GROUP BY domain, searchterms, count ORDER BY count DESC;")
+    end
   end
 end

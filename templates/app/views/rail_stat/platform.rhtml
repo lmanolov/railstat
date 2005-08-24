@@ -8,14 +8,13 @@
       <th>Percentage</th>
       <th>Hit Count</th>
     </tr>
-    <%% initListClass
-   for platform in @platforms %>
-    <tr class='<%%=popListClass%>'>
+<%% for platform in @platforms %>
+    <tr class='<%%= alternator %>'>
       <td><%%= platform.platform %></td>
-      <td><%%= platform.percent %>%</td>
+      <td><%%= sprintf("%000.2f", (platform.total.to_f/@total_hits)*100) %>%</td>
       <td><%%= platform.total %></td>
     </tr>
-    <%% end %>
+<%% end %>
   </table>
 </div>
 
@@ -28,15 +27,14 @@
       <th>Percentage</th>
       <th>Hit Count</th>
     </tr>
-<%% initListClass
-   for browser in @browsers %>
-    <tr class='<%%= popListClass %>'>
+<%% for browser in @browsers %>
+    <tr class='<%%= alternator %>'>
       <td><%%= browser.browser %></td>
       <td><%%= browser.version %></td>
-      <td><%%= browser.percent %>%</td>
+      <td><%%= sprintf("%000.2f",(browser.total.to_f/@total_hits)*100) %>%</td>
       <td><%%= browser.total %></td>
     </tr>
-    <%% end %>
+<%% end %>
   </table>
 </div>
 </div>

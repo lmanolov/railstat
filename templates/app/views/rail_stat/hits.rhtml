@@ -1,32 +1,38 @@
 <h1> Statistic on web hits for <%%= @subdomain %> </h1>
 <%%=render_partial 'menu'%>
-<h2>Last week hits</h2>
-<div id="path_stats_lw">
+
+
+<h2>Hits Summary</h2>
+<div id="path_stats_hs">
   <table class="list">
     <tr>
-      <th>Date</th>
+      <th>Time Period</th>
       <th>Total Hits</th>
       <th>Unique Hits</th>
     </tr>
-    <%% initListClass
-       for day in @lastweek %>
-    <tr class="<%%=popListClass%>">
-      <td><%%=day['hdate']%></td>
-      <td><%%=day['total_hits']%></td>
-      <td><%%=day['unique_hits']%></td>
+    <tr class='<%%= alternator %>'>
+      <td>Today</td>
+      <td><%%= @today_total %></td>
+      <td><%%= @today_unique %></td>
     </tr>
-    <%% end %>
-  </table>
-</div>
-
-<h2>Hits summary</h2>
-<div id="path_stats_hs">
-  <table class="list">
-    <tr><th>Totals</th><th>Uniques</th></tr>
-    <tr class="even"><td colspan="2">From <%%=@first_hit.datetime%></td></tr>
-    <tr class="odd"><td><%%=@total_hits%></td><td><%%=@unique_hits%></td></tr>
-    <tr class="even"><td colspan="2">Only on  <%%=Time.now%></td></tr>
-    <tr class="odd"><td><%%=@today_total%></td><td><%%=@today_unique%></td></tr>
+    <tr class='<%%= alternator %>'>
+      <td>Past 7 Days</td>
+      <td><%%= @past_7_total %></td>
+      <td><%%= @past_7_unique %></td>
+    </tr>
+    <%% for day in @lastweek -%>
+    <tr class='<%%= alternator %>'>
+          <td>&nbsp;&nbsp;<%%=day['created_on']%></td>
+          <td><%%=day['total_hits']%></td>
+          <td><%%=day['unique_hits']%></td>
+    </tr>
+    <%% end -%>
+    <tr class='<%%= alternator %>'>
+      <td>Since <%%= @first_hit.datetime %></td>
+      <td><%%= @total_hits %></td>
+      <td><%%= @unique_hits %></td>
+    </tr>
+    
   </table>
 </div>
 </div>

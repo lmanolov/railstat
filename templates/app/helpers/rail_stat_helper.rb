@@ -115,19 +115,18 @@ module RailStatHelper
       "ji" => "Yiddish",
       "zu" => "Zulu"}
 
-  def initListClass
-    @itClass = 1
-  end
-  
-  def popListClass
-    ret = getListClass
-    @itClass = @itClass + 1
-    return ret
-  end
-  
-  def getListClass
-    return "even" if @itClass%2 == 0
-    return "odd" if @itClass%2 == 1
+  def alternator
+    if @alternator.nil?
+      @alternator = 1
+    end
+    
+    @alternator = -@alternator
+    
+    if @alternator == -1
+      return "even"
+    else
+      return "odd"
+    end
   end
   
   def get_path_image(path, ors)
@@ -175,7 +174,7 @@ module RailStatHelper
   end
 
   def path_version_data(value)
-    return 'Unkown' if value.nil?
+    return 'Unknown' if value.nil?
     return 'Unsupported' if value == "0"
     return 'Supports' if value == "1"
     return value
