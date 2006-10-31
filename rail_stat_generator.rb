@@ -32,9 +32,8 @@ class RailStatGenerator < Rails::Generator::Base
       m.template "public/images/railstat/1pxtr.gif", "public/images/railstat/1pxtr.gif"
 
       m.template "db/ip-to-country.mysql.sql", "db/ip-to-country.mysql.sql"
-      m.template "db/railstat.mysql.sql", "db/railstat.mysql.sql"
-      m.template "db/railstat.pgsql.sql", "db/railstat.pgsql.sql"
-
+      m.migration_template "db/railstat.rb", "db/migrate", :migration_file_name => 'railstat'
+     
       m.template "README", "README_RAILSTAT"
     end
   end

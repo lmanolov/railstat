@@ -74,7 +74,7 @@ class RailStatController < ApplicationController
   end
 
   def tracker_js
-    if @request.env['HTTP_REFERER'] and @request.env['HTTP_REFERER'].include?(@request.env['HTTP_HOST'])
+    if @request.env['HTTP_REFERER'] and @request.env['HTTP_REFERER'].include?(request.host)
     str = <<-JSDATA
     c=0;
     s=0;

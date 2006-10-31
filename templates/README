@@ -1,7 +1,7 @@
 == Installation
 
 1. Create database
-2. Create the database schema using db/railstat.mysql.sql
+2. Create the database schema using rake migrate
 3. Download the IP-to-Country database from http://ip-to-country.webhosting.info/ :
 
    wget http://ip-to-country.webhosting.info/downloads/ip-to-country.csv.zip

@@ -27,13 +27,15 @@ module PathTracker
       
       sniff_keywords(domain, subdomain, referer);
 
-      if @request.env['REMOTE_ADDR'] == "127.0.0.1"
+      remote_ip = env['HTTP_X_FORWARDED_FOR'] || env['REMOTE_ADDR']
+      
+      if remote_ip == "127.0.0.1"
         client_country = "localhost"
       else
-        client_country = Iptoc.find_by_ip_address(@request.env['REMOTE_ADDR'])
+        client_country = Iptoc.find_by_ip_address(remote_ip)
       end
 
-      RailStat.create("remote_ip" => env['REMOTE_ADDR'],
+      RailStat.create("remote_ip" => remote_ip,
                       "country" => client_country,
                       "language" => determine_lang(env['HTTP_ACCEPT_LANGUAGE']),
                       "domain" => domain,
