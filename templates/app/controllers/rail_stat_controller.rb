@@ -12,8 +12,8 @@ class RailStatController < ApplicationController
   def path
     @ordered_resources, @orarr = RailStat.get_ordered40resources(@subdomain)
 
-    @number_hits = (@params['nh'] or not @params['nh'].nil?) ? @params['nh'].to_i : 50
-    @include_search_engines = ((@params['ise'] == '' or @params['ise'] == "1") ? 1 : 0)
+    @number_hits = (params['nh'] or not params['nh'].nil?) ? params['nh'].to_i : 50
+    @include_search_engines = ((params['ise'] == '' or params['ise'] == "1") ? 1 : 0)
 
     @count_totals = RailStat.resource_count_totals    
     @paths = RailStat.find_all_by_flag(@include_search_engines == 0, @number_hits, @subdomain)
@@ -74,7 +74,7 @@ class RailStatController < ApplicationController
   end
 
   def tracker_js
-    if @request.env['HTTP_REFERER'] and @request.env['HTTP_REFERER'].include?(request.host)
+    if request.env['HTTP_REFERER'] and request.env['HTTP_REFERER'].include?(request.host)
     str = <<-JSDATA
     c=0;
     s=0;
@@ -119,7 +119,7 @@ class RailStatController < ApplicationController
 
   private
   def extract_subdomain
-    @subdomain = ((@request.subdomains and @request.subdomains.first) ? @request.subdomains.first : nil)
+    @subdomain = ((request.subdomains and request.subdomains.first) ? request.subdomains.first : nil)
   end
 
 end
