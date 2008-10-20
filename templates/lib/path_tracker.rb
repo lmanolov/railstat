@@ -30,13 +30,18 @@ module PathTracker
       remote_ip = env['HTTP_X_FORWARDED_FOR'] || env['REMOTE_ADDR']
       
       if remote_ip == "127.0.0.1"
-        client_country = "localhost"
+        country_name = "LOCALHOST"
       else
-        client_country = Iptoc.find_by_ip_address(remote_ip)
+        country = Iptoc.find_by_ip_address(remote_ip)
+        unless country == nil
+          country_name = country.country_name
+        else
+          country_name = "UNKNOWN"
+        end
       end
 
       RailStat.create("remote_ip" => remote_ip,
-                      "country" => client_country,
+                      "country" => country_name,
                       "language" => determine_lang(env['HTTP_ACCEPT_LANGUAGE']),
                       "domain" => domain,
                       "subdomain" => subdomain,

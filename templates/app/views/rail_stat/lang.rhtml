@@ -29,7 +29,7 @@
 <%% for country in @countries %>
     <tr class="<%%= alternator %>">
       <td><%%= country.country %></td>
-      <td><%%= sprintf("%000.2f", (language.total.to_f/@total_hits)*100) %>%</td>
+      <td><%%= sprintf("%000.2f", (country.total.to_f/@total_hits)*100) %>%</td>
       <td><%%= country.total %></td>
     </tr>
 <%% end %>
