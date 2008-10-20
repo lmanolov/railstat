@@ -31,8 +31,8 @@ class Railstat < ActiveRecord::Migration
     add_index :search_terms, :subdomain
     
     create_table :iptocs do |t|
-      t.column :ip_from, :integer, :null => false
-      t.column :ip_to, :integer, :null => false
+      t.column :ip_from, :bigint, :null => false
+      t.column :ip_to, :bigint, :null => false
       t.column :country_code2, :string, :null => false
       t.column :country_code3, :string, :null => false
       t.column :country_name, :string, :null => false
