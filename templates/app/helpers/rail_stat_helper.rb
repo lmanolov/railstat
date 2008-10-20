@@ -163,7 +163,7 @@ module RailStatHelper
   end
 
   def get_time(t)
-    ts = Time.at(t)
+    ts = Time.parse(t.to_s)
     tn = Time.now
     if ts.day == tn.day and tn.year == ts.year and tn.month == ts.month
       # ts.strftime("%I:%M&nbsp;%p")

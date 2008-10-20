@@ -27,12 +27,13 @@
           <td><%%=day['unique_hits']%></td>
     </tr>
     <%% end -%>
+    <% unless @first_hit.blank? %>
     <tr class='<%%= alternator %>'>
       <td>Since <%%= @first_hit.datetime %></td>
       <td><%%= @total_hits %></td>
       <td><%%= @unique_hits %></td>
     </tr>
-    
+    <% end %>
   </table>
 </div>
 </div>

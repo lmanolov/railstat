@@ -62,7 +62,7 @@ class RailStat < ActiveRecord::Base
   end
   
   def datetime
-      Time.at(self.created_at)
+      Time.parse(self.created_at.to_s)
   end
 
 ####

@@ -102,17 +102,17 @@ class RailStatController < ApplicationController
     else
       str = ""
     end
-    render_text(str)
+    render :text => str
   end
   
   def track
     track_path
-    @response.headers['Pragma'] = ' '
-    @response.headers['Cache-Control'] = ' '
-    @response.headers['Content-Length'] = 68
-    @response.headers['Accept-Ranges'] = 'bytes'
-    @response.headers['Content-type'] = 'image/gif'
-    @response.headers['Content-Disposition'] = 'inline'
+    response.headers['Pragma'] = ' '
+    response.headers['Cache-Control'] = ' '
+    response.headers['Content-Length'] = 68
+    response.headers['Accept-Ranges'] = 'bytes'
+    response.headers['Content-type'] = 'image/gif'
+    response.headers['Content-Disposition'] = 'inline'
     File.open("#{RAILS_ROOT}/public/images/railstat/1pxtr.gif", 'rb') { |file| render :text => file.read }
   end
 
