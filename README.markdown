@@ -3,6 +3,7 @@
 This generator creates a real-time web site statistics system.
 
 Features:
+
  * Page views paths on each session
  * Number of total hits / unique hits
  * Operating system and browser
