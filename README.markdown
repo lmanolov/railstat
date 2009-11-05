@@ -22,8 +22,9 @@ This will generate controller, models, helper, views, db scripts, images and sty
  2. Create the database schema using rake db:migrate
  3. Download the IP-to-Country database from http://ip-to-country.webhosting.info/ :
 
-	<code>wget http://ip-to-country.webhosting.info/downloads/ip-to-country.csv.zip
-	 unzip ip-to-country.csv.zip</code>
+	<code>wget http://ip-to-country.webhosting.info/downloads/ip-to-country.csv.zip</code>
+
+	<code>unzip ip-to-country.csv.zip</code>
 
  4. Copy ip-to-country.csv in db/ directory
  5. Upload the data using ip-to-country.mysql.sql:
